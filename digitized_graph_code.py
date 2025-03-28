@@ -1,7 +1,7 @@
 import numpy as np 
 from scipy.interpolate import interp1d 
  
-# Define equations for each constant value curve 
+# Define equations for each constant value curve for optimum S/C ratio
 
 coefficients = { 
 0: [-2.24e-06, 0.000262, -0.01594, 1.325348], 
@@ -39,6 +39,7 @@ def interpolate_curves(x, input_value):
  
     return f(input_value)
 
+# Verification with values from graph
 x=60
 a2=40
 
