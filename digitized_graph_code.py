@@ -44,5 +44,5 @@ x=60
 a2=40
 
 result = interpolate_curvesSC(x, a2)
-print(f"The result of interpolate_curves is: {result}")
+print(f"The result of interpolate_curvesSC is: {result}")
 

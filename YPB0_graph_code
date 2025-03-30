@@ -1,0 +1,46 @@
+import numpy as np
+from scipy.interpolate import interp1d
+
+# Define equations for each constant value curve for optimum S/C ratio
+
+coefficients_YPB0 = {
+    80: [-0.1111, 0.3425, -0.2825, 0.1279],
+    75: [-0.0909, 0.3205, -0.3009, 0.1315],
+    70: [-0.0638, 0.2844, -0.3064, 0.1345],
+    65: [0.0265, 0.0941, -0.2011, 0.1163],
+    60: [0.0141, 0.1158, -0.224, 0.1215],
+    50: [-0.035, 0.1889, -0.2586, 0.1255],
+    40: [-0.0781, 0.2647, -0.2996, 0.1302]
+}
+
+# calculating with the coefficients
+# x in this case is S/C
+
+def calculate_y(x, coeffs):
+    return coeffs[0]*(x**3) + coeffs[1]*(x**2) + (coeffs[2]*x) + coeffs[3]
+
+# Function to interpolate between curves
+
+def interpolate_curvesYPB0(x, input_value):
+    keys = sorted(coefficients_YPB0.keys())
+    closest_key = min(keys, key=lambda k: abs(k - input_value))
+
+    if closest_key == input_value:
+        return calculate_y(x, coefficients_YPB0[closest_key])
+    else:
+        lower_key = max(k for k in keys if k < input_value)
+        upper_key = min(k for k in keys if k > input_value)
+
+        y_lower = calculate_y(x, coefficients_YPB0[lower_key])
+        y_upper = calculate_y(x, coefficients_YPB0[upper_key])
+
+        f = interp1d([lower_key, upper_key], [y_lower, y_upper], axis=0)
+
+        return f(input_value)
+
+# Verification with values from graph
+x = 1
+a2 = 70
+
+result = interpolate_curvesYPB0(x, a2)
+print(f"The result of interpolate_curvesYPB0 is: {result}")

@@ -1,0 +1,27 @@
+import numpy as np
+from scipy.interpolate import interp1d
+
+# Define equations for each constant value curve for optimum S/C ratio
+
+coefficients_TETLoss = {
+    'B1=a2': [-1.0937, 1.2335, 0.0311, -0.0022],
+    'B1=0': [-0.7311, 0.7196, 0.0114, -0.0021]
+}
+
+# calculating with the coefficients
+
+def calculate_y(x, coeffs):
+    return coeffs[0]*(x**3) + coeffs[1]*(x**2) + (coeffs[2]*x) + coeffs[3]
+
+# Function to interpolate between curves
+
+def TETLoss_coeffs(x):
+    TETAB = calculate_y(x, [-1.0937, 1.2335, 0.0311, -0.0022])
+    TETB0 = calculate_y(x, [-0.7311, 0.7196, 0.0114, -0.0021])
+
+    return TETAB, TETB0
+
+x = .20
+
+TETLoss_coeffs(x)
+print(f"The result of TETLoss_coeffs is: {TETLoss_coeffs(x)}")
