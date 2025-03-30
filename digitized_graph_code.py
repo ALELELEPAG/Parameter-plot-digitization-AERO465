@@ -3,7 +3,7 @@ from scipy.interpolate import interp1d
  
 # Define equations for each constant value curve for optimum S/C ratio
 
-coefficients = { 
+coefficients_SC = { 
 0: [-2.24e-06, 0.000262, -0.01594, 1.325348], 
 10: [-3.85e-06, 0.00050763, -0.02748, 1.467223], 
 20: [-4.06e-06, 0.00051671, -0.025974, 1.36122], 
@@ -21,19 +21,19 @@ def calculate_y(x, coeffs):
  
 # Function to interpolate between curves 
  
-def interpolate_curves(x, input_value): 
+def interpolate_curvesSC(x, input_value): 
      
-    keys = sorted(coefficients.keys()) 
+    keys = sorted(coefficients_SC.keys()) 
     closest_key = min(keys, key=lambda k: abs(k - input_value)) 
  
     if closest_key == input_value: 
-        return calculate_y(x, coefficients[closest_key]) 
+        return calculate_y(x, coefficients_SC[closest_key]) 
     else: 
         lower_key = max(k for k in keys if k < input_value) 
         upper_key = min(k for k in keys if k > input_value) 
          
-        y_lower = calculate_y(x, coefficients[lower_key]) 
-        y_upper = calculate_y(x, coefficients[upper_key]) 
+        y_lower = calculate_y(x, coefficients_SC[lower_key]) 
+        y_upper = calculate_y(x, coefficients_SC[upper_key]) 
 
         f = interp1d([lower_key, upper_key], [y_lower, y_upper], axis=0) 
  
@@ -43,6 +43,6 @@ def interpolate_curves(x, input_value):
 x=60
 a2=40
 
-result = interpolate_curves(x, a2)
+result = interpolate_curvesSC(x, a2)
 print(f"The result of interpolate_curves is: {result}")
 
