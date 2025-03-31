@@ -21,7 +21,7 @@ def TETLoss_coeffs(x):
 
     return TETAB, TETB0
 
-x = .20
+x = .0455
 
 TETLoss_coeffs(x)
 print(f"The result of TETLoss_coeffs is: {TETLoss_coeffs(x)}")

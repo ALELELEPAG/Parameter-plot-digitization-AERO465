@@ -1,0 +1,53 @@
+import numpy as np 
+from scipy.interpolate import interp1d 
+ 
+# Define equations for each constant value curve for optimum S/C ratio
+
+coefficients_StA = { 
+80: [1e-06, -0.001, -0.0462, 68.356],
+75: [4e-06, -0.0013, -0.1575, 62.036],
+70: [7e-06, -0.0019, -0.2588, 56.04],
+65: [1e-05, -0.0019, -0.377, 49.117],
+60: [1e-05, -0.0023, -0.4318, 43.613],
+55: [1e-05, -0.0022, -0.4776, 38.172],
+50: [2e-05, -0.0027, -0.5004, 33.448]
+} 
+
+# calculating with the coefficients
+
+def calculate_y(x, coeffs): 
+     
+    return coeffs[0]*(x**3) + coeffs[1]*(x**2) + (coeffs[2]*x) + coeffs[3] 
+ 
+# Function to interpolate between curves 
+ 
+def interpolate_curvesStA(x, input_value): 
+     
+    keys = sorted(coefficients_StA.keys()) 
+    closest_key = min(keys, key=lambda k: abs(k - input_value)) 
+ 
+    if closest_key == input_value: 
+        return calculate_y(x, coefficients_StA[closest_key]) 
+    else: 
+        lower_key = max(k for k in keys if k < input_value) 
+        upper_key = min(k for k in keys if k > input_value) 
+         
+        y_lower = calculate_y(x, coefficients_StA[lower_key]) 
+        y_upper = calculate_y(x, coefficients_StA[upper_key]) 
+
+        f = interp1d([lower_key, upper_key], [y_lower, y_upper], axis=0) 
+ 
+    return f(input_value)
+
+# Verification with values from graph
+B2=60.3579
+B1=39.7447
+
+result = interpolate_curvesStA(B1, B2)
+print(f"The result of interpolate_curvesStA is: {result}")
+
+B2v = 69.0925
+B1v = -8
+
+result2 = interpolate_curvesStA(B1v, B2v)
+print(f"The result of interpolate_curvesStA is: {result2}")
