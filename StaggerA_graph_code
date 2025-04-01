@@ -40,14 +40,14 @@ def interpolate_curvesStA(x, input_value):
     return f(input_value)
 
 # Verification with values from graph
-B2=60.3579
-B1=39.7447
+B2=63.5061
+B1=45.0854
 
 result = interpolate_curvesStA(B1, B2)
-print(f"The result of interpolate_curvesStA is: {result}")
+print(f"The result of interpolate_curvesStA for blade is: {result}")
 
-B2v = 69.0925
+B2v = 70.8782
 B1v = -8
 
 result2 = interpolate_curvesStA(B1v, B2v)
-print(f"The result of interpolate_curvesStA is: {result2}")
+print(f"The result of interpolate_curvesStA for vane is: {result2}")
