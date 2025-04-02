@@ -40,14 +40,26 @@ def interpolate_curvesStA(x, input_value):
     return f(input_value)
 
 # Verification with values from graph
-B2=63.5061
-B1=45.0854
+B2=67.114
+B1=52.885
 
 result = interpolate_curvesStA(B1, B2)
 print(f"The result of interpolate_curvesStA for blade is: {result}")
 
-B2v = 70.8782
+B2v = 74.602
 B1v = -8
 
 result2 = interpolate_curvesStA(B1v, B2v)
 print(f"The result of interpolate_curvesStA for vane is: {result2}")
+
+#ML:
+#The result of interpolate_curvesStA for blade is: 25.218421323592587
+#The result of interpolate_curvesStA for vane is: 60.286855586559994
+
+#Tip:
+#The result of interpolate_curvesStA for blade is: 21.617960856409244
+#The result of interpolate_curvesStA for vane is: 57.8225889408
+
+#Hub: 
+#The result of interpolate_curvesStA for blade is: 30.726851955392526
+#The result of interpolate_curvesStA for vane is: 62.794799334400004
